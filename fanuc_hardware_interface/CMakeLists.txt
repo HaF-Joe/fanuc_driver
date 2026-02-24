@@ -35,6 +35,11 @@ else()
   target_link_libraries(fanuc_robot_driver PUBLIC hardware_interface::hardware_interface)
 endif()
 
+# Pass hardware_interface version to source for conditional compilation
+target_compile_definitions(fanuc_robot_driver PRIVATE
+  HARDWARE_INTERFACE_VERSION_MAJOR=${hardware_interface_VERSION_MAJOR}
+)
+
 target_include_directories(fanuc_robot_driver PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>

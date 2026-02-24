@@ -8,3 +8,6 @@ log
 *.swp
 .idea/
 .vscode/
+
+# CodeQL artifacts
+_codeql_detected_source_root

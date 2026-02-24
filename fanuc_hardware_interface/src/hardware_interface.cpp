@@ -18,6 +18,15 @@
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/logging.hpp"
 
+// Jazzy (hardware_interface 4.x) deprecates the Humble-era export_state_interfaces(),
+// export_command_interfaces(), on_init(HardwareInfo), and Handle(name, iface, double*) APIs
+// but maintains backward compatibility. Suppress these warnings to allow clean builds on both
+// Humble and Jazzy without changing the functional code.
+#if defined(HARDWARE_INTERFACE_VERSION_MAJOR) && HARDWARE_INTERFACE_VERSION_MAJOR >= 4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 namespace fanuc_robot_driver
 {
 namespace
@@ -585,6 +594,10 @@ hardware_interface::CallbackReturn FanucHardwareInterface::on_shutdown(const rcl
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 }  // namespace fanuc_robot_driver
+
+#if defined(HARDWARE_INTERFACE_VERSION_MAJOR) && HARDWARE_INTERFACE_VERSION_MAJOR >= 4
+#pragma GCC diagnostic pop
+#endif
 
 #include "pluginlib/class_list_macros.hpp"
 

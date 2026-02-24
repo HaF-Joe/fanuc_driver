@@ -13,6 +13,30 @@
 This repository hosts the source code of the FANUC ROS 2 Driver project, a ros2_control high-bandwidth streaming driver.
 This project will allow users to develop a ROS 2 application to control a FANUC virtual or real robot.
 
+## Supported ROS 2 Distributions
+
+| Distribution | Full Driver | Hardware Interface | Robot Description |
+|---|---|---|---|
+| **Humble** | ✅ | ✅ | ✅ |
+| **Jazzy** | — | ✅ | ✅ |
+
+### ROS 2 Jazzy Support
+
+The following packages are compatible with ROS 2 Jazzy:
+
+- **`fanuc_hardware_interface`** — The ros2_control hardware interface plugin for communicating with FANUC robots. This enables real-time joint streaming and GPIO control on Jazzy.
+- **`fanuc_libs`** — Core C++ libraries (built automatically as a dependency).
+- **`fanuc_description`** — Standalone robot description package containing URDF, SRDF, and reference MoveIt configuration files. Designed specifically for use with the **MoveIt Setup Assistant** on Jazzy.
+
+To use on Jazzy, build only the supported packages:
+
+```bash
+cd ~/ros2_ws
+colcon build --packages-up-to fanuc_hardware_interface fanuc_description
+```
+
+See the [`fanuc_description/README.md`](fanuc_description/README.md) for detailed instructions on using the MoveIt Setup Assistant with Jazzy.
+
 ## Installation
 
 See the [FANUC ROS 2 Driver Documentation](https://fanuc-corporation.github.io/fanuc_driver_doc/) for instructions.
