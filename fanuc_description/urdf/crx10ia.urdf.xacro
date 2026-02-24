@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!--
+SPDX-FileCopyrightText: 2025, FANUC America Corporation
+SPDX-FileCopyrightText: 2025, FANUC CORPORATION
+SPDX-License-Identifier: Apache-2.0
+-->
+<robot name="crx10ia" xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:include filename="$(find fanuc_crx_description)/urdf/crx10ia_urdf_macro.xacro"/>
+  <xacro:include filename="$(find fanuc_description)/urdf/crx_ros2_control_macro.xacro"/>
+
+  <link name="world"/>
+  <link name="end_effector"/>
+  <xacro:crx10ia parent="world" child="end_effector">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:crx10ia>
+
+  <xacro:crx_control name="crx10ia"/>
+</robot>
