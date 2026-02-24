@@ -14,6 +14,12 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 
+// Suppress Jazzy (hardware_interface 4.x) deprecation warnings for backward-compatible API usage.
+#if defined(HARDWARE_INTERFACE_VERSION_MAJOR) && HARDWARE_INTERFACE_VERSION_MAJOR >= 4
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 namespace fanuc_robot_driver
 {
 
@@ -92,3 +98,7 @@ private:
 };
 
 }  // namespace fanuc_robot_driver
+
+#if defined(HARDWARE_INTERFACE_VERSION_MAJOR) && HARDWARE_INTERFACE_VERSION_MAJOR >= 4
+#pragma GCC diagnostic pop
+#endif

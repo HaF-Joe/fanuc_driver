@@ -29,8 +29,18 @@ jobs:
     strategy:
       fail-fast: false # should not cancel the others immediately
       matrix:
-        ROS_DISTRO: [humble]
-        ROS_REPO: [main]
+        include:
+          - ROS_DISTRO: humble
+            ROS_REPO: main
+            CLANG_TIDY: true
+            COLCON_PKG_SELECTION: ''
+          - ROS_DISTRO: jazzy
+            ROS_REPO: main
+            CLANG_TIDY: ''
+            # On Jazzy, build only the hardware interface and its dependencies (fanuc_libs,
+            # fanuc_msgs) plus the standalone description package. Other packages
+            # (fanuc_controllers, fanuc_moveit_config, etc.) are not yet ported to Jazzy.
+            COLCON_PKG_SELECTION: '--packages-up-to fanuc_hardware_interface fanuc_description'
     env:
       CCACHE_DIR: "${{ github.workspace }}/.ccache" # directory for ccache (and how we enable ccache in industrial_ci)
     steps:
@@ -55,7 +65,7 @@ jobs:
         env:
           ROS_DISTRO: ${{ matrix.ROS_DISTRO }}
           ROS_REPO: ${{ matrix.ROS_REPO }}
-          CLANG_TIDY: true
+          CLANG_TIDY: ${{ matrix.CLANG_TIDY }}
           CMAKE_ARGS: >-
             -DBUILD_TESTING=1
             -DBUILD_EXAMPLES=1
@@ -64,3 +74,4 @@ jobs:
             -DCMAKE_CXX_STANDARD_REQUIRED=ON
           ADDITIONAL_DEBS: git-all
           ROSDEP_SKIP_KEYS: fanuc_crx_description
+          COLCON_PKG_SELECTION: ${{ matrix.COLCON_PKG_SELECTION }}
